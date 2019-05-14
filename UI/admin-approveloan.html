@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin</title>
+    <link rel="stylesheet" type="text/css" href="css/admin-approveloan.css"/>
+</head>
+
+<body>
+
+<div class="container" id="container">
+
+    <div class="top-bar" id="topbar">
+
+        <div id="openbtn" class="open-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+         <p>Approve or Reject Loan</p>
+         <p class="user">Welcome, Admin</p>
+        <a href="index.html" class="logout-btn">Log out</a>
+   
+    </div>
+   
+    <div class="side-bar" id="sidebar">
+            <div id="closebtn" class="colse-btn">&times;</div>
+        <div class="hh-logo">
+            <span id="hh-logo-text">Quick<span class="hh-logo-sub">Credit
+            </span>
+        </span>
+         </div>
+         <hr>
+         <ul>
+            <li><a href="admin-dashboard.html">Dashboard</a></li>
+            <li><a href="admin-approveloan.html">Approve Loan</a></li>
+            <li><a href="admin-verifyaddress.html">Verify Address</a></li>
+            <li><a href="admin-viewloan.html">View Loan</a></li>
+            <li><a href="postloanrepay.html">Post repayment</a></li>
+        </ul>
+    </div>
+   
+   <div class="content-display">
+       <p>
+            <div id="main">
+                    <table id="customers">
+                            <tr>
+                                    <th>Id</th>
+                                    <th>Names</th>
+                                    <th>Address</th>
+                                    <th>Loan amount</th>
+                                    <th>Approve / Reject</th>
+                                     
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Chukwuka Itohan</td>
+                                <td>Oyo, Nigeria</td>
+                                <td>2,000,000.00</td>
+                                <td>
+                                  <button class="btn-approve" id="approve">Approve</button>&nbsp;&nbsp; 
+                                  <button class="btn-reject" id="reject">reject</button> 
+                                </td>
+                                 
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Olowu Tobiloba</td>
+                                <td>Lagos, Nigeria</td>
+                                <td>500,000.00</td>
+                                <td>
+                                 <button class="btn-approve" id="approve">Approve</button>&nbsp;&nbsp; 
+                                 <button class="btn-reject" id="reject">reject</button> 
+                                </td>
+                            </tr>
+                             
+                          </table>
+                    
+
+            </div>
+       </p>
+   </div>
+   
+   
+    </div>
+    <script src="js/admin-approveloan.js"></script>
+    </body>
+    </html>
