@@ -24,11 +24,7 @@
   },
   "homepage": "https://github.com/Naimaoye/quickCredit-App#readme",
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.4",
     "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.4.4",
-    "@babel/register": "^7.4.4",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "coveralls": "^3.0.3",
@@ -39,6 +35,10 @@
     "mocha": "^6.1.4"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.4.4",
+    "@babel/register": "^7.4.4",
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "dotenv": "^8.0.0",
