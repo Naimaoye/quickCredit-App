@@ -22,12 +22,6 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('*', (req, res) => {
-    res.status(200).send({
-        message: 'Welcome, there is an error'
-    });
-});
-
 
 app.listen(port, () => Debug(`server has started on ${port}`));
 

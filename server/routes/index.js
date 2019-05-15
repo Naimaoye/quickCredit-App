@@ -55,7 +55,7 @@ const route = (app) => {
     app.patch('/api/v1/users/:email/verify', verifyAdmin, adminVerifyUser);
     
     //admin accept or reject loan
-    app.patch('/api/v1/loans/:id', verifyAdmin, loanApprovalValidator, userId, loanApproval);
+    app.patch('/api/v1/loans/:id', verifyAdmin, loanApprovalValidator, loanApproval);
 
      //admin get all loan repayment history
     app.get('/api/v1/loans/:id/repayments', verifyUser, userId, getRepaymentHistory);
