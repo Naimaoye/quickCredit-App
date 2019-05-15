@@ -2,7 +2,6 @@ import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import debug from 'debug';
-import expressValidator from 'express-validator';
 import route from './routes/index';
 
 const app = express();
