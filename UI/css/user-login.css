@@ -1,0 +1,267 @@
+
+body {
+    color: #011b33;
+    font-family: 'proxima_nova_altbold', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #eee;
+  }
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+.navbar {
+    /* overflow: hidden; */
+    /* background: rgba(241, 243, 254, 0.95); */
+    position: fixed;
+    width: 100%;
+    max-height: 70px;
+    padding: 25px 80px 15px 50px;
+    z-index: 999999;
+  }
+  
+  
+  .hh-logo #hh-logo-text {
+    font-size: 1.44rem;
+    font-family: 'proxima_nova_altblack', 'Proxima Nova', sans-serif;
+    font-weight: bolder;
+    margin-top: -15px;
+    margin-left: 20px;
+    display: block;
+    color: #011B33;
+    animation: text-colorchange 45s infinite;
+    /* animation-name followed by duration in seconds*/
+    -webkit-animation: text-colorchange 45s infinite;
+    /* Chrome and Safari */
+  }
+  
+  .hh-logo-sub {
+    font-weight: 500 !important;
+    color: #eb63ff !important;
+  }
+  
+  nav.menu {
+    margin-top: -53px;
+    float: right;
+    padding: 20px 20px 0px 20px;	
+  }
+  
+  #menu-icon {
+    margin-top: 4px;
+    margin-right: 10px;
+     display: hidden;
+    width: 30px;
+      height: 30px;
+      background: transparent url(../image/menu.png) no-repeat center/cover;
+  }
+  
+  .menu .menu-list a {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    color: #011b33;
+    font-family: 'Proxima Nova', sans-serif;
+    padding: 5px 10px 5px 10px;
+  }
+  
+  .menu .menu-list a:hover#menu-icon {
+      background-color: #444;
+      border-radius: 4px 4px 0 0;
+  }
+  
+  .menu .menu-list {
+    list-style: none;    
+    position: relative;
+    display: unset;
+  }
+  
+  .menu .menu-list li {
+    position: relative;
+    display: inline-block;
+    float: left;
+    padding: 10px 18px;
+  }
+
+  .loginBox{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 450px;
+      height: 420px;
+      padding: 40px 40px;
+      box-sizing: border-box;
+      background: rgba(3, 1, 29, 0.6);
+  }
+  .main{
+    display: block !important;
+  }
+  .active, .main:hover {
+    background-color:rgba(255,255,255,.5);
+    color: #011b33;
+    display: block;
+  }
+  h2{
+    padding: 0;
+    margin: 0;
+    color:  #cac8ce;
+    text-align: center;
+  }
+  .loginBox .below{
+   margin-top: 10px;
+  }
+  .below .acct{
+    margin-top: 10px;
+    color:  #cac8ce;
+  }
+  .loginBox .subcontainer{
+   padding-top: 20px;
+  }
+  .loginBox p{
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    color: #fff;
+  }
+  .loginBox input{
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .loginBox input[type="text"],.loginBox input[type="password"]{
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+  }
+  ::placeholder{
+    color: rgba(255,255,255,.5);
+  }
+  .loginBox button{
+    margin-top: 20px;
+    border: none;
+    outline: none;
+    height: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    color: #fff;
+    background: #eb63ff;
+    cursor: pointer;
+  }
+  .loginBox button:hover{
+    color: #262626;
+    background: #e977c7;
+  }
+  .loginBox a{
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .loginBox a:hover{
+    text-decoration: underline;
+  }
+
+  @media screen and (min-width: 2560px){
+    .loginBox{ 
+      width: 700px;
+      height: 550px;
+      padding: 40px 40px;
+  }
+  }
+
+  @media screen and (max-width: 1440px) and (min-width: 1330px){
+    .loginBox{ 
+      width: 550px;
+      height: 450px;
+      padding: 40px 40px;
+  }
+  }
+
+  @media screen and (max-width: 1024px) and (min-width: 768px) {
+
+    .menu .menu-list a {
+      font-size: 0.8rem;
+    }
+  
+    .menu .dropdown.small {
+      min-width: 150px !important;
+      margin-left: -80px !important;
+    }
+  
+    .menu .menu-list li:last-child {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  
+    .menu .menu-list li {
+      position: relative;
+      display: inline-block;
+      float: left;
+      padding: 10px 10px;
+    }
+}
+
+  @media screen and (max-width: 768px) {
+     .navbar {
+    padding: 16px 20px 14px 10px;
+  }
+
+  .menu li:hover .dropdown {
+    display: block;
+    position: relative;
+  }
+
+	#menu-icon {
+		display:inline-block;
+	}
+
+	.menu .menu-list, .menu:active .menu-list { 
+    display: none;
+    position: fixed;
+    background: rgba(241, 243, 254, 0.95);
+    right: 0px;
+    text-align: left;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px 0 4px 4px;
+	}
+
+	.menu .menu-list li {
+		text-align: left;
+		width: 100%;
+		padding: 10px 14px;
+		margin: 0;
+  }
+  
+	.menu:hover .menu-list {
+		display: block;
+	}
+
+  .hh-logo img {
+    max-width: 45px;
+  }
+
+  .hh-logo #hh-logo-text {
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin-top: -10px;
+    margin-left: 50px;
+  } 
+  nav.menu {
+    margin-top: -53px;
+  }
+
+  }
+  @media screen and (max-width: 468px) {
+
+    .loginBox{ 
+      width: 380px;
+      height: 420px;
+      padding: 40px 40px;
+  }
+
+  }

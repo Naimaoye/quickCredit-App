@@ -1,0 +1,218 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .hh-logo #hh-logo-text {
+    font-size: 1.44rem;
+    font-family: 'proxima_nova_altblack', 'Proxima Nova', sans-serif;
+    font-weight: bolder;
+    margin-top: 30px;
+    margin-left: 20px;
+    display: block;
+    color: #011B33;
+    animation: text-colorchange 45s infinite;
+    /* animation-name followed by duration in seconds*/
+    -webkit-animation: text-colorchange 45s infinite;
+    /* Chrome and Safari */
+  }
+  .hh-logo-sub {
+    font-weight: 500 !important;
+    color: #eb63ff !important;
+  }
+  .container{
+    margin-left: 200px;
+    transition: 0.4s;
+  }
+  
+  .container .top-bar{
+  width: 100%;
+  height: 60px;
+  background-color:#f5f1ee;
+  padding-top: 15px;
+  padding-left: 5px;
+  }
+  .container .top-bar .open-btn{
+    visibility: hidden;
+  }
+  .container .top-bar .logout-btn{
+    position: fixed;
+    right: 20px;
+    top: 14px;
+    background: #d112ee;
+  }
+  .container .top-bar .logout-btn:hover{
+    border: 2px solid #011B33;
+    background: #ad3cbe;
+  }
+  .container .top-bar a{
+    display: block;
+    height: 30px;
+    border: 1px solid #eee;
+    width: 100px;
+    background-color:#f5f1ee;
+    color:#fff;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    padding: 3px;
+    border-radius: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+  .top-bar .open-btn span{
+  width: 30px;
+  height: 4px;
+  display: block;
+  background-color:#2e5266;
+  margin-top: 5px;
+  }
+  
+  .top-bar p{
+    color: #011B33;
+    font-size: 18px;
+    margin-left: 40px;
+    margin-top: -20px;
+    font-weight: 600;
+    letter-spacing: .5px;
+  }
+  .top-bar .user{
+    color: #011B33;
+    float: right;
+    margin-right: 180px;
+    font-weight: 300;
+    font-style: italic;
+  }
+  .container .side-bar{
+    position: fixed;
+    width: 200px;
+    z-index: 1;
+    height: 100%;
+    background: rgba(3, 1, 29, 0.7);
+    top: 0;
+    left: 0;
+    color: white;
+    font-weight: 700;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    transition: 0.4s;
+  }
+  
+  .side-bar ul{
+    list-style: none;
+    margin-top: 60px;
+    
+  }
+  
+  .side-bar ul a{
+    display: block;
+    color: white;
+    height: 45px;
+    width: auto;
+    text-decoration: none;
+    padding-left: 20px;
+    padding-top: 13px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+  }
+  
+  .side-bar ul a:hover{
+    background-color: rgba(3, 1, 29, 0.8);
+    }
+  
+  
+  .side-bar .colse-btn{
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  
+  
+  .container .content-display{
+    padding-left: 5px;
+    position: fixed;
+    height: 100%;
+    background-color: #ffffff;
+    width: 100%;
+    overflow-y: scroll;
+  }
+  
+  .subcontainer{
+    position: absolute;
+        width: 450px;
+        height: 300px;
+        padding: 40px 40px;
+        box-sizing: border-box;
+        background: rgba(47, 31, 49, 0.5);
+        margin: 60px 100px 0px 100px;
+  
+  }
+  .subcontainer input[type="text"], .subcontainer input[type="number"]{
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+  }
+  ::placeholder{
+    color: rgba(255,255,255,.5);
+  }
+  .subcontainer p{
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    color: #fff;
+  }
+  .subcontainer input{
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .subcontainer button{
+    margin-top: 20px;
+      border: none;
+      outline: none;
+      height: 40px;
+      font-size: 16px;
+      font-weight: bold;
+      width: 100%;
+      color: #fff;
+      background: #ee85de;
+      cursor: pointer;
+  }
+  .subcontainer button:hover{
+    background: #f5a9e9;
+    color: black;
+  }
+  @media only screen and (max-width: 768px) {
+    .container .side-bar{
+        position: fixed;
+        width: 0;
+        z-index: 1;
+        height: 100%;
+        background: rgba(3, 1, 29, 0.5);
+        top: 0;
+        left: 0;
+        color: white;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        transition: 0.4s;
+    }
+  
+    .container{
+        margin-left: 0;
+    }
+    .container .top-bar .open-btn{
+        visibility: visible;
+    }
+    .top-bar p{
+        color: #011B33;
+        font-size: 18px;
+        margin-left: 40px;
+    }
+    .side-bar ul a:hover{
+        background-color: rgba(3, 1, 29, 0.8);
+     }
+  }
