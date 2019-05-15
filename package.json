@@ -9,7 +9,8 @@
     "start-dev": "DEBUG=http nodemon --exec babel-node server/app.js",
     
     "build": "babel server -d dist",
-    "start": "npm run build && node dist/app.js",
+    "prestart": "npm run build ",
+    "start": "node dist/app.js",
     "heroku-postbuild": "npm run build"
   },
   "repository": {
