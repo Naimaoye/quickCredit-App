@@ -1,6 +1,5 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import supertest from 'supertest';
 import server from '../server/app';
 
 chai.should();
@@ -372,7 +371,7 @@ describe('Test for Admin mark user as verified', () => {
     });
     it('should throw a 401 when no token is provided', (done) => {
       const Admin = {
-        email: 'wunmi@mail.com',
+        email: 'adebayo@yahoo.com',
         password: 'password',
       };
       const email = 'doyin@email.com';
