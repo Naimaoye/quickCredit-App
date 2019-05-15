@@ -135,7 +135,13 @@ describe('/POST user', () => {
         isAdmin: false,
         token: '7qnrdw1wundefinedundefined'	
     }
-
+    it('it should create a user successfully', (done) => {
+      chai.request(server).post('/api/v1/auth/signup').send(userErr).end((err, res) => {
+           res.status.should.be.eql(201);
+           res.body.should.be.a('object');
+       });
+       done();
+   });
     it('it should not create a user if firstname is not present', (done) => {
    		chai.request(server).post('/api/v1/auth/signup').send(userErr).end((err, res) => {
             res.status.should.be.eql(422);
