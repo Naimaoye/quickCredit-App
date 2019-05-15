@@ -1,7 +1,6 @@
 
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import supertest from 'supertest';
 import server from '../server/app';
 
 chai.should();
