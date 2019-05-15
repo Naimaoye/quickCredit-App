@@ -73,9 +73,9 @@ static createUsers(req, res) {
     // checks if user exists
     const emailExists = users.find(user => user.email === email);
 
-    if(!emailExists && !Authenticator.comparePassword(emailExists.password, password)
-     || !emailExists && Authenticator.comparePassword(emailExists.password, password)
-     || emailExists && !Authenticator.comparePassword(emailExists.password, password)){
+    if(!emailExists && !Auth.comparePassword(emailExists.password, password)
+     || !emailExists && Auth.comparePassword(emailExists.password, password)
+     || emailExists && !Auth.comparePassword(emailExists.password, password)){
       return res.status(401).json({
         status: 401,
         error: 'Auth failed',
