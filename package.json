@@ -6,7 +6,9 @@
   "scripts": {
     "test": "mocha -r @babel/register",
     "lint": "./node_modules/.bin/eslint ./ --fix",
-    "start": "DEBUG=http nodemon --exec babel-node server/app.js"
+    "start-dev": "DEBUG=http nodemon --exec babel-node server/app.js",
+    "start": "node build/app.js",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
