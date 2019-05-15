@@ -18,7 +18,7 @@ route(app);
 
 app.get('/', (req, res) => {
   return res.status(200).send({
-    'message': 'Welcome, this is the beginning of all endpoints'
+    'message': 'Welcome, this endpoints were created by Oyewale Naimat'
   });
 });
 
