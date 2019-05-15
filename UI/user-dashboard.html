@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Profile</title>
+    <link rel="stylesheet" type="text/css" href="css/dashboard.css"/>
+</head>
+
+<body>
+
+<div class="container" id="container">
+
+    <div class="top-bar" id="topbar">
+
+        <div id="openbtn" class="open-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+         <p>Dashboard</p>
+         <p class="user">Welcome, user</p>
+        <a href="index.html" class="logout-btn">Log out</a>
+   
+    </div>
+   
+    <div class="side-bar" id="sidebar">
+            <div id="closebtn" class="colse-btn">&times;</div>
+        <div class="hh-logo">
+            <span id="hh-logo-text">Quick<span class="hh-logo-sub">Credit
+            </span>
+        </span>
+         </div>
+         <hr>
+         <ul>
+            <li><a href="dashboard.html"><img src="image/dashboard.png">  &nbsp;Dashboard</a></li>
+            <li><a href="profile.html"><img src="image/avatar.png">  &nbsp;Profile</a></li>
+            <li><a href="view-loan.html"><img src="image/history-button.png">  &nbsp;Loan History</a></li>
+            <li><a href="loan-apply.html"><img src="image/profiles.png">  &nbsp;Apply For Loan</a></li>
+        </ul>
+    </div>
+   
+   <div class="content-display">
+       <p>
+            <div id="main">
+
+                    <div style="background-color: #eee;">
+                    <p class="inner one"><img src="image/medical-history.png"></p>
+                    <span class="side">Total Loans :<p class="val1">0</p></span>
+                    </div>
+
+                    <div style="background-color: #eee;">
+                    <p class="inner two"><img src="image/warning.png"></p>
+                    <span class="side">Cancelled : <p class="val2">0</p></span>
+                    </div>
+
+                    <div style="background-color: #eee;">
+                      <p class="inner three"><img src="image/png"></p>
+                      <span class="side">Completed : <p class="val3">0</p></span>
+                    </div>
+
+                  </div>
+       </p>
+   </div>
+   
+   
+    </div>
+    <script src="js/dashboard.js"></script>
+    </body>
+    </html>
