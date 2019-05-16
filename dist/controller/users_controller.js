@@ -54,48 +54,39 @@ function () {
           firstName = _req$body.firstName,
           lastName = _req$body.lastName,
           address = _req$body.address;
-      var password;
+      var isAdmin = false;
 
       var token = _authenticate["default"].generateToken({
         email: email,
         isAdmin: isAdmin
       });
 
-      _bcryptjs["default"].hash(req.body.password, 10, function (err, hash) {
-        if (err) {
-          return res.status(500).json({
-            error: err
-          });
-        } else {
-          var newUser = _objectSpread({
-            id: _userss["default"].length + 1,
-            token: token
-          }, req.body, {
-            password: hash,
-            status: 'unverified',
-            isAdmin: false,
-            registered: new Date()
-          });
+      var newUser = _objectSpread({
+        id: _userss["default"].length + 1,
+        token: token
+      }, req.body, {
+        status: 'unverified',
+        isAdmin: isAdmin,
+        registered: new Date()
+      });
 
-          var emailExists = _userss["default"].find(function (user) {
-            return user.email === email;
-          });
+      var emailExists = _userss["default"].find(function (user) {
+        return user.email === email;
+      });
 
-          if (emailExists) {
-            return res.status(409).json({
-              status: 409,
-              error: 'User already exist'
-            });
-          }
+      if (emailExists) {
+        return res.status(409).json({
+          status: 409,
+          error: 'User already exist'
+        });
+      }
 
-          _userss["default"].push(newUser);
+      _userss["default"].push(newUser);
 
-          return res.status(201).json({
-            message: 'successfully created a user',
-            status: 201,
-            newUser: newUser
-          });
-        }
+      return res.status(201).json({
+        message: 'successfully created a user',
+        status: 201,
+        newUser: newUser
       });
     }
   }, {
@@ -109,10 +100,10 @@ function () {
         return user.email === email;
       });
 
-      if (!emailExists && !Authenticator.comparePassword(emailExists.password, password) || !emailExists && Authenticator.comparePassword(emailExists.password, password) || emailExists && !Authenticator.comparePassword(emailExists.password, password)) {
-        return res.status(401).json({
-          status: 401,
-          error: 'Auth failed'
+      if (!emailExists && !_authenticate["default"].comparePassword(emailExists.password, password) || !emailExists && _authenticate["default"].comparePassword(emailExists.password, password) || emailExists && !_authenticate["default"].comparePassword(emailExists.password, password)) {
+        return res.status(404).json({
+          status: 404,
+          error: 'user not found'
         });
       }
 
@@ -152,8 +143,8 @@ function () {
       }
 
       if (usersdata.status === 'not verified') {
-        return res.status(404).json({
-          status: 404,
+        return res.status(401).json({
+          status: 401,
           message: 'User has not been verified'
         });
       }
@@ -163,7 +154,6 @@ function () {
         email: usersdata.email,
         firstName: usersdata.firstName,
         lastName: usersdata.lastName,
-        password: usersdata.password,
         address: usersdata.address,
         status: usersdata.status,
         isAdmin: usersdata.isAdmin
