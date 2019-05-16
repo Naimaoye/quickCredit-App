@@ -25,7 +25,6 @@ static createUsers(req, res) {
      email, firstName, lastName, address,
      } = req.body;
 
-     let password;
 
     const isAdmin = false;
 
@@ -34,12 +33,6 @@ static createUsers(req, res) {
              isAdmin
          });
 
-    bcrypt.hash(req.body.password, 10, (err,hash) =>{
-      if(err){
-        return res.status(500).json({
-          error: err,
-        })
-      }else{
    const newUser = {
     id: users.length + 1,
     token,
@@ -63,8 +56,6 @@ static createUsers(req, res) {
    status: 201,
    newUser,
    });
-      }
-    })
     
 }
  
@@ -75,12 +66,12 @@ static createUsers(req, res) {
     // checks if user exists
     const emailExists = users.find(user => user.email === email);
 
-    if(!emailExists && !Authenticator.comparePassword(emailExists.password, password)
-     || !emailExists && Authenticator.comparePassword(emailExists.password, password)
-     || emailExists && !Authenticator.comparePassword(emailExists.password, password)){
-      return res.status(401).json({
-        status: 401,
-        error: 'Auth failed',
+    if(!emailExists && !Auth.comparePassword(emailExists.password, password)
+     || !emailExists && Auth.comparePassword(emailExists.password, password)
+     || emailExists && !Auth.comparePassword(emailExists.password, password)){
+      return res.status(404).json({
+        status: 404,
+        error: 'user not found',
       });
     }
      
@@ -117,8 +108,8 @@ static createUsers(req, res) {
       });
     }
      if(usersdata.status === 'not verified'){
-      return res.status(404).json({
-        status: 404,
+      return res.status(401).json({
+        status: 401,
         message: 'User has not been verified',
       });
      }
@@ -128,7 +119,6 @@ static createUsers(req, res) {
       email: usersdata.email,
       firstName: usersdata.firstName,
       lastName: usersdata.lastName,
-      password: usersdata.password,
       address: usersdata.address,
       status: usersdata.status,
       isAdmin: usersdata.isAdmin,
