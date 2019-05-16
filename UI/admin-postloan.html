@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin</title>
+    <link rel="stylesheet" type="text/css" href="css/postloanrepay.css"/>
+</head>
+
+<body>
+
+<div class="container" id="container">
+
+    <div class="top-bar" id="topbar">
+
+        <div id="openbtn" class="open-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+         <p>Post Loan Repayment</p>
+         <p class="user">Welcome, admin</p>
+        <a href="index.html" class="logout-btn">Log out</a>
+   
+    </div>
+   
+    <div class="side-bar" id="sidebar">
+            <div id="closebtn" class="colse-btn">&times;</div>
+        <div class="hh-logo">
+            <span id="hh-logo-text">Quick<span class="hh-logo-sub">Credit
+            </span>
+        </span>
+         </div>
+         <hr>
+         <ul>
+            <li><a href="admin-dashboard.html">Dashboard</a></li>
+            <li><a href="admin-approveloan.html">Approve Loan</a></li>
+            <li><a href="admin-verifyaddress.html">Verify Address</a></li>
+            <li><a href="admin-viewloan.html">View Loan</a></li>
+            <li><a href="postloanrepay.html">Post repayment</a></li>
+        </ul>
+    </div>
+   
+   <div class="content-display">
+       <p>
+            <div class="subcontainer">
+                    <form action="#">
+                            <p>Customer's email address</p>
+                            <input type="email" placeholder="" name="email" required>
+                            <p>Loan Amount</p>
+                            <input type="number" placeholder="" name="name" required>
+                            <p>Due Date</p>
+                            <input type="number" placeholder="" name="email" required>
+                            <p>Amount Paid</p>
+                            <input type="number" placeholder="" name="email" required>
+                            <p>Amount Pending</p>
+                            <input type="number" placeholder="" name="email" required>
+                              <button type="submit" class="signupbtn">Post</button>
+                            </div>
+                </form>
+                    
+
+           </div>
+       </p>
+   </div>
+   
+   
+    </div>
+    <script src="js/postloanrepay.js"></script>
+    </body>
+    </html>
