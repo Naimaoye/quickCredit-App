@@ -1,40 +1,43 @@
-import Authenticate from '../middle_ware/authenticate';
-
-
-const users = [
+const Loans = [
     {
         id: 1,
-        email: 'doyin@email.com',
-        firstName: 'Ade',
-        lastName: 'doyin',
-        password: Authenticate.hashPassword('password'),
-        address: 'cresent street',
-        status: 'verified',
-        isAdmin: false,
-        token: '7qnrdw1wundefinedundefined'
+        user: 'doyin@email.com',
+        createdOn: 'Fri, Jul 8, 2018 11:54 PM',
+        password: 'password',
+        status: 'pending',
+        repaid: false,
+        tenor: 3,
+        amount: 10000.00,
+        paymentInstallment: 3500.00,
+        balance: 10000.00,
+        interest: 500.00,
     },
     {
         id: 2,
-        email: 'adebayo@ware.ng',
-        password: Authenticate.hashPassword('password'),
-        firstName: 'james',
-        lastName: 'john',
-        address: 'New york city',
-        status: 'not verified',
-        isAdmin: false,
-        token: '7qnrdw1wundefinedundefined'
+        user: 'adebayo@ware.ng',
+        createdOn: 'Fri, Jul 20, 2016 11:54 PM',
+        password: 'password',
+        status: 'approved',
+        repaid: true,
+        tenor: 3,
+        amount: 10000.00,
+        paymentInstallment: 3500.00,
+        balance: 0,
+        interest: 500.00,
     },
     {
         id: 3,
-        email: 'adebayo@yahoo.com',
-        password: Authenticate.hashPassword('password'),
-        firstName: 'john',
-        lastName: 'doe',
-        address: 'Lekki phase I, Lagos',
-        status: 'verified',
-        isAdmin: true,
-        token: '7qnrdw1wundefinedundefined'
-    },
+        user: 'adebayo@yahoo.com',
+        createdOn: 'Fri, Jul 8, 2019 11:54 PM',
+        password: 'password',
+        status: 'approved',
+        repaid: false,
+        tenor: 3,
+        amount: 50000.00,
+        paymentInstallment: 5000.00,
+        balance: 40000.00,
+        interest: 500.00,
+    }
 ];
 
-export default users;
+export default Loans;
