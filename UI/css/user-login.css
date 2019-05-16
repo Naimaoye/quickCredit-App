@@ -20,7 +20,12 @@ body {
     padding: 25px 80px 15px 50px;
     z-index: 999999;
   }
-  
+  button a{
+    text-decoration: none;
+  }
+  button a:hover{
+    text-decoration: none !important;
+  }
   
   .hh-logo #hh-logo-text {
     font-size: 1.44rem;
