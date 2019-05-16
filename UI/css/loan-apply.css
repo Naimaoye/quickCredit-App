@@ -142,14 +142,14 @@
   .subcontainer{
     position: absolute;
         width: 450px;
-        height: 300px;
+        height: 500px;
         padding: 40px 40px;
         box-sizing: border-box;
         background: rgba(47, 31, 49, 0.5);
         margin: 60px 100px 0px 100px;
   
   }
-  .subcontainer input[type="text"], .subcontainer input[type="number"]{
+  .subcontainer input[type="text"], .subcontainer input[type="number"], .subcontainer input[type="date"]{
     border: none;
     border-bottom: 1px solid #fff;
     background: transparent;
