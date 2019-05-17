@@ -31,8 +31,7 @@ const usersValidator = (req, res, next) => {
             status: 400,
             error: error.details[0].message 
         });
-           // res.status(400).send(error.details[0].message);
-           // return;
+           
         }
         next();
     });
@@ -57,8 +56,6 @@ const loginValidator = (req, res, next) => {
             status: 400,
             error: error.details[0].message 
         });
-           // res.status(400).send(error.details[0].message);
-           // return;
         }
         next();
     });
@@ -77,8 +74,6 @@ const loanApprovalValidator = (req, res, next) => {
             status: 400,
             error: error.details[0].message 
         });
-           // res.status(400).send(error.details[0].message);
-           // return;
         }
         next();
     });
@@ -110,8 +105,6 @@ const loanValidator = (req, res, next) => {
             status: 400,
             error: error.details[0].message 
         });
-           // res.status(400).send(error.details[0].message);
-           // return;
         }
         next();
     });
@@ -132,8 +125,6 @@ const loanQueryValidator = (req, res, next) => {
             status: 400,
             error: error.details[0].message 
         });
-           // res.status(400).send(error.details[0].message);
-           // return;
         }
         next();
     });
@@ -150,8 +141,6 @@ const userId = (req, res, next) => {
             status: 400,
             error: error.details[0].message 
         });
-           // res.status(400).send(error.details[0].message);
-           // return;
         }
         next();
     });
@@ -168,8 +157,6 @@ const loanRepaymentValidator = (req, res, next) => {
             status: 400,
             error: error.details[0].message 
         });
-           // res.status(400).send(error.details[0].message);
-           // return;
         }
         next();
     });

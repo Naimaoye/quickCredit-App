@@ -7,7 +7,6 @@ class Authorize {
       const bearer = bearerHeader.split(' ');
       const bearerToken = bearer[1];
       req.token = bearerToken;
-      // const token = req.headers['authorization'].split(' ')[1];
       const decoded = Authenticate.verifyToken(req.token);
       console.log(decoded.payload.isAdmin);
       if (decoded.payload.isAdmin === false) {
@@ -24,7 +23,6 @@ static verifyAdmin(req, res, next) {
       const bearer = bearerHeader.split(' ');
       const bearerToken = bearer[1];
       req.token = bearerToken;
-      // const token = req.headers['authorization'].split(' ')[1];
       const decoded = Authenticate.verifyToken(req.token);
       console.log(decoded.payload.isAdmin);
       if (decoded.payload.isAdmin === true) {
