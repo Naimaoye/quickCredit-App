@@ -11,7 +11,6 @@ const users = [
         address: 'cresent street',
         status: 'verified',
         isAdmin: false,
-        //token: Auth.generateToken({'doyin@email.com', false})
     },
     {
         id: 2,
@@ -22,7 +21,6 @@ const users = [
         address: 'New york city',
         status: 'not verified',
         isAdmin: false,
-       // token: Auth.generateToken({'adebayo@ware.ng', false})
     },
     {
         id: 3,
@@ -33,13 +31,7 @@ const users = [
         address: 'Lekki phase I, Lagos',
         status: 'verified',
         isAdmin: true,
-      //  token: Auth.generateToken({'adebayo@quickcredit.com', true})
     },
 ];
 
 export default users;
-
-
-
-
-
