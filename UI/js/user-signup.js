@@ -5,9 +5,9 @@ let ck_username = /^[A-Za-z0-9_]{1,20}$/;
 let ck_password =  /^[A-Za-z0-9!@#$%^&*()_]{6,20}$/;
 
 function validate(form){
-let name = document.getElementById('').value;
-let email = document.getElementById('').value;
-let password = document.getElementById('').value;
+let name = document.getElementById('name').value;
+let email = document.getElementById('email').value;
+let password = document.getElementById('psw').value;
 let errors = [];
  
  if (!ck_name.test(name)) {
