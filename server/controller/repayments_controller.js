@@ -33,16 +33,14 @@ class Repaymentcontroller {
           error: 'You have overpaid, please check your balance',
         });
      }
-
-
     const updatedData = {
       id,
       loanId: id,
       createdOn: userLoan.createdOn,
       amount: userLoan.amount,
       monthlyInstallemnt: userLoan.paymentInstallment,
-      amountPaid,
-      balance,
+      amountPaid : amountPaid,
+      balance: 0,
     };
 
     if (userLoan.balance === 0){

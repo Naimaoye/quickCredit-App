@@ -11,7 +11,7 @@ const users = [
         address: 'cresent street',
         status: 'verified',
         isAdmin: false,
-        token: '7qnrdw1wundefinedundefined'
+        //token: Auth.generateToken({'doyin@email.com', false})
     },
     {
         id: 2,
@@ -22,18 +22,18 @@ const users = [
         address: 'New york city',
         status: 'not verified',
         isAdmin: false,
-        token: '7qnrdw1wundefinedundefined'
+       // token: Auth.generateToken({'adebayo@ware.ng', false})
     },
     {
         id: 3,
-        email: 'adebayo@yahoo.com',
+        email: 'adebayo@quickcredit.com',
         password: Authenticate.hashPassword('password'),
         firstName: 'john',
         lastName: 'doe',
         address: 'Lekki phase I, Lagos',
         status: 'verified',
         isAdmin: true,
-        token: '7qnrdw1wundefinedundefined'
+      //  token: Auth.generateToken({'adebayo@quickcredit.com', true})
     },
 ];
 

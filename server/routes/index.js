@@ -54,16 +54,16 @@ const route = (app) => {
     app.patch('/api/v1/users/:email/verify', verifyAdmin, adminVerifyUser);
 
     // admin accept or reject loan
-    app.patch('/api/v1/loans/:id', verifyAdmin, loanApprovalValidator, loanApproval);
+    app.patch('/api/v1/loans/:id', verifyAdmin, loanApproval);
 
     // admin get all loan repayment history
-    app.get('/api/v1/loans/:id/repayments', userId, getRepaymentHistory);
+    app.get('/api/v1/loans/:id/repayments', verifyAdmin, userId, getRepaymentHistory);
 
     // admin get all loan applications
-    app.get('/api/v1/loans', getAllLoans);
+    app.get('/api/v1/loans', verifyAdmin, getAllLoans);
 
     // admin get all loans that has been approved but not repaid
-    app.get('/api/v1/loans?status=approved&repaid=false:true', loanQueryValidator, getAllLoans);
+    app.get('/api/v1/loans?status=approved&repaid=false:true', verifyAdmin, loanQueryValidator, getAllLoans);
 
     // admin get all specific application
     app.get('/api/v1/loans/:id', verifyAdmin, userId, getSpecificLoan);

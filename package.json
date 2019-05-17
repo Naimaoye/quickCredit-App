@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -r @babel/register",
-    "lint": "./node_modules/.bin/eslint ./ --fix",
+    "lint": "eslint ./ --fix",
     "start-dev": "DEBUG=http nodemon --exec babel-node server/app.js",
     "build": "babel server -d dist",
     "prestart": "npm run build ",
@@ -48,4 +48,3 @@
     "nodemon": "^1.19.0"
   }
 }
-

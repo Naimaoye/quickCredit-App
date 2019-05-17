@@ -1,24 +1,25 @@
-import bcrypt from 'bcryptjs';
 import users from '../models/userss';
+import bcrypt from 'bcryptjs';
 import Auth from '../middle_ware/authenticate';
 
 class Usercontroller {
-    // get all the users
+    //get all the users
     static getUsers(req, res) {
-    	try {
-    		return res.status(200).json({
-                message: 'All users successfully gotten',
-                users,
-                status: 200
-    		});
-    	} catch (e) {
-    		return res.status(500).json({
-    			message: 'An error occured',
-    		});
-    	}
+        try{
+            return res.status(200).json({
+              message: 'All users successfully gotten',
+              users,
+              status: 200
+            });
+        }catch(e){
+            return res.status(500).json({
+                message: 'An error occured',
+            });
+        }
+        
     }
 
-    static createUsers(req, res) {
+static createUsers(req, res) {
         const {
             email, firstName, lastName, address,
         } = req.body;
@@ -55,26 +56,31 @@ class Usercontroller {
             newUser,
         });
     }
-
-
+ 
+  
     static loginUser(req, res) {
         const { email, password } = req.body;
         // checks if user exists
         const emailExists = users.find(user => user.email === email);
 
-        if (!emailExists) { // && !Auth.comparePassword(emailExists.password, password)
-            // || !emailExists && Auth.comparePassword(emailExists.password, password)
-            // || emailExists && !Auth.comparePassword(emailExists.password, password)) {
+        if (!emailExists) {  
             return res.status(404).json({
                 status: 404,
                 error: 'user not found',
             });
         }
-        console.log(emailExists);
+
+         const isAdmin = emailExists.isAdmin;
+         
+         const myToken = Auth.generateToken({
+            emailExists,
+            isAdmin
+        });
+
         return res.status(200).json({
             status: 200,
             data: {
-                token: emailExists.token,
+                token: myToken,
                 id: emailExists.id,
                 firstName: emailExists.firstName,
                 lastName: emailExists.lastName,
@@ -84,44 +90,50 @@ class Usercontroller {
         });
     }
 
+
     static adminVerifyUser(req, res) {
-        const { email } = req.params;
-        const usersdata = users.find(user => user.email === email);
 
-        if (!usersdata) {
-            return res.status(404).send({
-                status: 404,
-                error: 'User not found!',
-            });
-        }
-
-        if (usersdata.status === 'verified') {
-            return res.status(409).json({
-                status: 409,
-                message: 'User has been verified',
-            });
-        }
-        if (usersdata.status === 'not verified') {
-            return res.status(401).json({
-                status: 401,
-                message: 'User has not been verified',
-            });
-        }
-
-        usersdata.status = 'verified';
-        const changedData = {
-            email: usersdata.email,
-            firstName: usersdata.firstName,
-            lastName: usersdata.lastName,
-            address: usersdata.address,
-            status: usersdata.status,
-            isAdmin: usersdata.isAdmin,
-        };
-        return res.status(200).json({
-            status: 200,
-            data: changedData,
-        });
+    const { email } = req.params;
+    const usersdata = users.find(user => user.email === email);
+    
+    if (!usersdata) {
+      return res.status(404).send({
+        status: 404,
+        error: 'User not found!',
+      });
     }
+
+    if (usersdata.status === 'verified') {
+      return res.status(409).json({
+        status: 409,
+        message: 'User has been verified',
+      });
+    }
+     if(usersdata.status === 'not verified'){
+      return res.status(404).json({
+        status: 404,
+        message: 'User has not been verified',
+      });
+     }
+
+    usersdata.status = 'verified';
+    const changedData = {
+      email: usersdata.email,
+      firstName: usersdata.firstName,
+      lastName: usersdata.lastName,
+      password: usersdata.password,
+      address: usersdata.address,
+      status: usersdata.status,
+      isAdmin: usersdata.isAdmin,
+    };
+    return res.status(200).json({
+      status: 200,
+      data: changedData,
+    });
+
+}
+
+
 }
 // module.exports = userController;
 export default Usercontroller;

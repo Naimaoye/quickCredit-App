@@ -27,8 +27,12 @@ const usersValidator = (req, res, next) => {
 
     return Joi.validate(req.body, schema, (error) => {
         if (error) {
-            res.status(400).send(error.details[0].message);
-            return;
+            return res.status(400).json({
+            status: 400,
+            error: error.details[0].message 
+        });
+           // res.status(400).send(error.details[0].message);
+           // return;
         }
         next();
     });
@@ -49,8 +53,12 @@ const loginValidator = (req, res, next) => {
     });
     return Joi.validate(req.body, schema, (error) => {
         if (error) {
-            res.status(400).send(error.details[0].message);
-            return;
+            return res.status(400).json({
+            status: 400,
+            error: error.details[0].message 
+        });
+           // res.status(400).send(error.details[0].message);
+           // return;
         }
         next();
     });
@@ -65,8 +73,12 @@ const loanApprovalValidator = (req, res, next) => {
     });
     return Joi.validate(req.body, schema, (error) => {
         if (error) {
-            res.status(400).send(error.details[0].message);
-            return;
+            return res.status(400).json({
+            status: 400,
+            error: error.details[0].message 
+        });
+           // res.status(400).send(error.details[0].message);
+           // return;
         }
         next();
     });
@@ -94,8 +106,12 @@ const loanValidator = (req, res, next) => {
     });
     return Joi.validate(req.body, schema, (error) => {
         if (error) {
-            res.status(400).send(error.details[0].message);
-            return;
+            return res.status(400).json({
+            status: 400,
+            error: error.details[0].message 
+        });
+           // res.status(400).send(error.details[0].message);
+           // return;
         }
         next();
     });
@@ -112,8 +128,12 @@ const loanQueryValidator = (req, res, next) => {
     });
     return Joi.validate(req.body, schema, (error) => {
         if (error) {
-            res.status(400).send(error.details[0].message);
-            return;
+            return res.status(400).json({
+            status: 400,
+            error: error.details[0].message 
+        });
+           // res.status(400).send(error.details[0].message);
+           // return;
         }
         next();
     });
@@ -126,8 +146,12 @@ const userId = (req, res, next) => {
     });
     return Joi.validate(req.body.id, schema, (error) => {
         if (error) {
-            res.status(400).send(error.details[0].message);
-            return;
+            return res.status(400).json({
+            status: 400,
+            error: error.details[0].message 
+        });
+           // res.status(400).send(error.details[0].message);
+           // return;
         }
         next();
     });
@@ -136,12 +160,16 @@ const userId = (req, res, next) => {
 
 const loanRepaymentValidator = (req, res, next) => {
     const schema = Joi.object().keys({
-        paidAmount: Joi.number().required(),
+        amountPaid: Joi.number().required(),
     });
     return Joi.validate(req.body, schema, (error) => {
-        if (error) {
-            res.status(400).send(error.details[0].message);
-            return;
+       if (error) {
+            return res.status(400).json({
+            status: 400,
+            error: error.details[0].message 
+        });
+           // res.status(400).send(error.details[0].message);
+           // return;
         }
         next();
     });

@@ -4,7 +4,7 @@ const Loans = [
         user: 'doyin@email.com',
         createdOn: 'Fri, Jul 8, 2018 11:54 PM',
         password: 'password',
-        status: 'pending',
+        status: 'rejected',
         repaid: false,
         tenor: 3,
         amount: 10000.00,
