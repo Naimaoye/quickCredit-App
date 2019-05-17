@@ -56,8 +56,8 @@ var route = function route(app) {
 
   app.get('/api/v1/loans', verifyAdmin, loanQueryValidator, getAllLoans); //admin get all loans that has been approved but not repaid
 
-  app.get('/api/v1/loans?status=approved&repaid=false', loanQueryValidator, getAllLoans);
-  app.get('/api/v1/loans?status=approved&repaid=true', loanQueryValidator, getAllLoans); //admin get all specific application
+  app.get('/api/v1/loans?status=approved&repaid=false:true', loanQueryValidator, getAllLoans); //app.get('/api/v1/loans?status=approved&repaid=true',loanQueryValidator, getAllLoans);
+  //admin get all specific application
 
   app.get('/api/v1/loans/:id', verifyAdmin, userId, getSpecificLoan);
 };

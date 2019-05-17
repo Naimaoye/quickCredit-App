@@ -30,9 +30,10 @@ function () {
 
         var decoded = _authenticate["default"].verifyToken(token);
 
-        var userType = decoded.payload.isAdmin;
+        var userMail = req.body.email;
+        var check = userMail.endsWith("@quickcredit.com");
 
-        if (userType === false) {
+        if (check) {
           return res.status(403).send({
             status: 403,
             error: 'You do not have access to this route'
@@ -55,9 +56,10 @@ function () {
 
         var decoded = _authenticate["default"].verifyToken(token);
 
-        var userType = decoded.payload.isAdmin;
+        var userMail = req.body.email;
+        var check = userMail.endsWith("@quickcredit.com");
 
-        if (userType === true) {
+        if (!check) {
           return res.status(403).send({
             status: 403,
             error: 'You cannot access this route'
