@@ -135,5 +135,6 @@ static createUsers(req, res) {
 
 
 }
-// module.exports = userController;
+
 export default Usercontroller;
+
