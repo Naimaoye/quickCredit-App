@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My Profile</title>
-    <link rel="stylesheet" type="text/css" href="css/loan-apply.css"/>
+    <link rel="stylesheet" type="text/css" href="css/profile.css"/>
 </head>
 
 <body>
@@ -19,7 +19,7 @@
                         <span></span>
                         <span></span>
                     </div>
-                     <p>Apply For Loan</p>
+                     <p>My Profile</p>
                      <p class="user">Welcome, user</p>
                     <a href="index.html" class="logout-btn">Log out</a>
                
@@ -33,7 +33,7 @@
                     </span>
                      </div>
                      <hr>
-                     <ul>
+                    <ul>
                         <li><a href="dashboard.html"><img src="image/dashboard.png">  &nbsp;Dashboard</a></li>
                         <li><a href="profile.html"><img src="image/avatar.png">  &nbsp;Profile</a></li>
                         <li><a href="view-loan.html"><img src="image/history-button.png">  &nbsp;Loan History</a></li>
@@ -43,23 +43,36 @@
                
                <div class="content-display">
                    <p>
-                        <div class="subcontainer">
-                                <form action="#">
-                                  <p>Amount</p>
-                                  <input type="number" placeholder="" name="name" required>
-                                  <p>Date Applied</p>
-                                  <input type="date" placeholder="" name="date" required>
-                                  <p>Monthly Installments</p>
-                                  <input type="number" placeholder="" name="number" required>
-                                  <p>Duration</p>
-                                  <input type="number" placeholder="" name="duration" required>
+                       <div id="main-main">
+                        <div class="photo main1">
+                            <div class="photo-in"></div>
+                            <button class="btn-submit">Upload Photo</button>
+                        </div>
+                    <form  action="#">
+                        <div id="main">
 
-                                    <button type="submit" class="signupbtn">Apply</button>
-                                  </div>
-                                </form>
+                                <input type="text" placeholder="Full name" name="" required>
+                                
+                                <input type="text" placeholder="Home Address" name="" required>
+                        </div>
+                              <div id="main">
+                                    <input type="text" placeholder="Work Address" name="" required>
+
+                                    <input type="number" placeholder="Account number" name="" required>
+                             </div>
+                             <div id="main">
+                                    <input type="text" placeholder="Bank" name="" required>
+                                    
+                                    <input type="text" placeholder="BVN" name="" required>
                             </div>
-                       </p>
+                            <div id="main">
+                                    <button class="btn-submit">Update</button>
+                            </div>
+                    </form>
+                            
+                       </div>
+                   </p>
                </div>
-               <script src="js/loan-apply.js"></script>
+               <script src="js/profile.js"></script>
 </body>
 </html>
