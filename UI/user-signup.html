@@ -27,17 +27,22 @@
                 <h2>Create an Account</h2>
             </div>
             <div class="subcontainer">
-                <form action="#">
+                <form name="registration" id="form" action="#" method="post" onsubmit="return validateform();">
                   <p>Full name</p>
-                  <input type="text" placeholder="your full name" name="name" required>
+                  <input type="text" placeholder="your full name" name="name" id="name" required>
+                  <span id="f_error_msg" style="color:red;"></span>
                   <p>Email</p>
-                  <input type="text" placeholder="example@email.com" name="email" required>
+                  <input type="text" placeholder="example@email.com" name="email" id="email" required>
+                  <span id="f_error_msg" style="color:red;"></span>
                   <p>Phone number</p>
-                  <input type="number" placeholder="012345" name="number" required>
+                  <input type="number" placeholder="012345" name="number" id="number" required>
+                  <span id="f_error_msg" style="color:red;"></span>
                   <p>Password</p>
-                  <input type="password" placeholder="Enter Password" name="psw" required>
+                  <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+                  <span id="f_error_msg" style="color:red;"></span>
                   <p>Confirm Password</p>
-                  <input type="password" placeholder="Confirm Password" name="psw-repeat" required>
+                  <input type="password" placeholder="Confirm Password" name="pssw-repeat" id="pssw-repeat" required>
+                  <span id="f_error_msg" style="color:red;"></span>
 
                    <label class="container1"> Click to accept the <a href="#">terms of service</a>
                       <input type="checkbox" checked="checked" required>
