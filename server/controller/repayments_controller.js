@@ -2,81 +2,116 @@ import loans from '../models/loans';
 import repayments from '../models/repayment';
 
 class Repaymentcontroller {
-   
-  static postRepayment(req, res) {
+    /**
+    * post loan repayments for user
+    *
+    * @param {object} request express request object
+    * @param {object} response express response object
+    *
+    * @returns {json} json
+    *
+    * @memberof RepaymentController
+    */
 
-    const id = parseInt(req.params.id, 10);
-    const userLoan = loans.find(loan => loan.id === id);
+  static async postRepayment(req, res) {
+    try{
+      const id = parseInt(req.params.id, 10);
+      const paidAmount = parseFloat(req.body.paidAmount);
+      const userLoan = await loans.getOneLoan(id);
 
-    if (!userLoan) {
-      return res.status(404).send({
-        status: 404,
-        error: 'user loan not found!',
-      });
-    }
-
-    const amountPaid = parseFloat(req.body.amountPaid);
-    const balance = parseFloat(userLoan.balance) - amountPaid;
-
-    if(userLoan && (userLoan.status === 'approved')){
-     
-     if(amountPaid < userLoan.balance){
-      return res.status(400).send({
-          status: 400,
-          error: 'You need to complete your loan within the specified time',
+      if(userLoan.rows.length > 0) {
+        if (userLoan.rows[0].status !== 'approved') {
+          return res.status(401).send({
+            error: 'This loan has not yet been approved';
+          });
+        }
+        if (userLoan.rows[0].repaid === true){
+          return res.status(400).send({
+          error: 'This loan has been repaid',
+          });
+        }
+        if (paidAmount > userLoan.rows[0].balance) {
+          return res.status(400).send({
+          error: `The paid amount exceeds remaining balane! You only have # ${userLoan.rows[0].balance} left`
         });
-     }
-     
-     if(amountPaid > userLoan.balance){
-      return res.status(400).send({
-          status: 400,
-          error: 'You have overpaid, please check your balance',
-        });
-     }
-    const updatedData = {
-      id,
-      loanId: id,
-      createdOn: userLoan.createdOn,
-      amount: userLoan.amount,
-      monthlyInstallemnt: userLoan.paymentInstallment,
-      amountPaid : amountPaid,
-      balance: 0,
-    };
+      }
+      if (paidAmount <= userLoan.rows[0].balance) {
+        userLoan.rows[0].balance -= paidAmount;
 
-    if (userLoan.balance === 0){
-      userLoan.repaid = true;
-      return res.status(200).send({
-             status: 200,
-             message: 'your loan has been fully repaid',
-             data: updatedData,
-            });
+        const postPayment = await repayments.postLoan(id, paidAmount);
+        const updateLoanBalance = await loans.updateUserBalance(userLoan.rows[0].balance, id);
+        const updatedData = {
+          id: updateLoanBalance.rows[0].id,
+          loanId: postPayment.rows[0].loanId,
+          createdOn: postPayment.rows[0].createdOn,
+          amount: updateLoanBalance.rows[0].amount,
+          monthlyInstallment: updateLoanBalance.rows[0].paymentInstallment,
+          paidAmount,
+          balance: updateLoanBalance.rows[0].balance,
+        };
+
+        if (userLoan.rows[0].balance === 0) {
+          const repaid = true;
+
+          await loans.setRepaid(repaid, userLoan.rows[0].balance);
+
+          return res.status(201).send({
+            data: {
+              ...updatedData,
+            }
+          });
+        }
+       return res.status(201).send({
+        data: {
+          ...updatedData,
+        },
+       });
+     }
    }
-}
-else{
-  return res.status(404).send({
-      status: 404,
-      error: 'You do not have any loan history',
+     return res.status(404).send({
+      error: 'No Loan with this Id found',
+     });
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Ops something broke',
     });
-}
+  }
+
+
 
 }
 
-  static getRepaymentHistory(req, res) {
-    const { id } = req.params;
-    const specificRepayment = repayments.find(repayment => repayment.id === parseInt(id, 10));
+/**
+   * user can view repayment history
+   *
+   * @param {object} request express request object
+   * @param {object} response express response object
+   *
+   * @returns [array] array
+   *
+   * @memberof RepaymentController
+   */
 
-    if (!specificRepayment.loanId) {
+  static async getRepaymentHistory(req, res) {
+    try {
+      const id = parseInt(req.params.id, 10);
+      const repaymentHistory = await repayments.findLoanId(id);
+      const userEmail = await loans.findEmailByLoanId(id);
+      
+      if (req.user.email !== userEmail.rows[0].email) {
+        return res.status(401).json({
+          error: 'Email do not match! Enter the email you registered with',
+        });
+      }
+      return res.status(200).send({
+        data: repaymentHistory.rows,
+      });
+    } catch (error) {
       return res.status(404).send({
-        status: 404,
-        error: 'Repayment history with the id is not found!',
+        error: 'No repayment record found',
       });
     }
-    return res.status(200).send({
-      status: 200,
-      data: specificRepayment,
-    });
   }
 }
 
 export default Repaymentcontroller;
-

@@ -3,7 +3,7 @@ import Authenticate from './authenticate';
 
 class Authorize {
     static verifyUser(req, res, next) {
-             const bearerHeader = req.headers['authorization'];
+      const bearerHeader = req.headers['authorization'];
       const bearer = bearerHeader.split(' ');
       const bearerToken = bearer[1];
       req.token = bearerToken;

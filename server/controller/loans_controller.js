@@ -1,120 +1,221 @@
 import loans from '../models/loans';
+import users from '../models/userss';
 
 class Loancontroller {
-   
-  static applyForLoan(req, res) {
-    const {
-      email, firstName, lastName, amount, tenor,
-    } = req.body;
-    const loanId = loans.length + 1;
-    const status = 'pending';
-    const interest = 0.05;
-    const paymentInstallment = parseFloat((amount * interest) / tenor).toFixed(2);
-    const balance = parseFloat(amount).toFixed(2);
-    const createdOn = new Date();
-    const repaid = false;
-    const data = {
-      loanId,
-      firstName,
-      lastName,
-      email,
-      tenor,
-      amount,
-      paymentInstallment,
-      status,
-      balance,
-      interest,
-    };
-    
-    const updatedData = {
-      id: data.loanId,
-      user: data.email,
-      createdOn,
-      status,
-      repaid,
-      tenor,
-      amount,
-      paymentInstallment,
-      balance,
-      interest,
-    };
-    const loanExists = loans.find(loan => loan.user === email);
-    if (loanExists) {
+ 
+  /**
+  * creates a loan application
+  *
+  * @param {object} request express request object
+  * @param {object} response express response object
+  *
+  * @returns {json} json
+  *
+  * @memberof LoanController
+  */
+
+  static async loanApply(req, res) {
+    try {
+      const { tenor } = req.body;
+      const amount = Number(req.body.amount.toFixed(3));
+      const userData = await users.findByEmail(req.user.email);
+
+      if (userData.rows.length < 1) {
+        return res.status(404).send({
+          error: 'User does not exist!',
+        });
+      }
+      if (req.user.email !== userData.rows[0].email) {
+        return res.status(401).json({
+          error: 'Email do not match! Enter the email you registered with',
+        });
+      }
+      if (userData.rows[0].status !== 'verified') {
+        return res.status(401).json({
+          error: 'User not verified. You cannot apply for a loan yet',
+        });
+      }
+
+      const findUserLoan = await loans.findLoansByEmail(req.user.email);
+
+      if (findUserLoan.rows.length === 0
+        || findUserLoan.rows[findUserLoan.rows.length - 1].repaid === true) {
+        const status = 'pending';
+        const repaid = false;
+        const interest = 0.05 * amount;
+        const paymentInstallment = ((amount + interest) / tenor);
+        const balance = paymentInstallment * tenor;
+        const { email, firstName, lastName } = userData.rows[0];
+        const loanApplication = {
+          email,
+          firstName,
+          lastName,
+          status,
+          tenor,
+          amount,
+          balance,
+          interest,
+          paymentInstallment,
+          repaid,
+        };
+        const response = await loans.applyForLoans(loanApplication);
+        const newLoan = response.rows[0];
+        return res.status(201).json({
+          data: {
+            ...newLoan,
+          },
+        });
+      }
       return res.status(409).json({
-        status: 409,
-        error: 'user already applied for a loan',
+        error: 'Already applied for a loan',
+      });
+    } catch (error) {
+      return res.status(500).json({
+        error: 'Ops something broke',
       });
     }
+  }   
 
-    loans.push(updatedData);
-    return res.status(201).json({
-      status: 201,
-      data,
-    });
-  }
+/**
+     * gets all loan application
+     *
+     * @param {object} request express request object
+     * @param {object} response express response object
+     *
+     * @returns[array] array
+     *
+     * @memberof LoanController
+     */
 
-  static getAllLoans(req, res) {
+  static async getAllLoans(req, res) {
+    try {
+      const { status } = req.query;
+      let { repaid } = req.query;
 
-    const { status, repaid } = req.query;
-    if (status && repaid) {
-      const currentLoan = loans
-        .filter(loan => loan.status === status && loan.repaid === JSON.parse(repaid));
+      if (status && repaid) {
+        repaid = JSON.parse(repaid);
+        const queriedLoans = await loans.getQueriedLoans(status, repaid);
+
+        if (queriedLoans.rows.length === 0) {
+          return res.status(200).send({
+            message: 'Loans not available',
+          });
+        }
+        return res.status(200).send({
+          data: queriedLoans.rows,
+        });
+      }
+
+      const allLoans = await loans.getAllLoans();
+
+      if (allLoans.rows.length === 0) {
+        return res.status(200).send({
+          message: 'Loans not available',
+        });
+      }
+
       return res.status(200).send({
-        status: 200,
-        data: currentLoan,
+        data: allLoans.rows,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        error: 'Ops something broke',
       });
     }
-    return res.status(200).send({
-      status: 200,
-      data: loans,
-    });
   }
 
-  static getSpecificLoan(req, res) {
-    const { id } = req.params;
-    const specificLoan = loans.find(loan => loan.id === parseInt(id, 10));
-    if (!specificLoan) {
-      return res.status(404).json({
-        status: 404,
-        error: 'loan application not found',
+/**
+     * gets specific application
+     *
+     * @param {object} request express request object
+     * @param {object} response express response object
+     *
+     * @returns {json} json
+     *
+     * @memberof LoanController
+     */
+
+  static async getOneLoan(req, res) {
+    try {
+      const id = parseInt(req.params.id, 10);
+      const specificLoan = await loans.getOneLoan(id);
+
+
+      if (specificLoan.rows.length === 0) {
+        return res.status(404).send({
+          error: 'No Loan with that id exist',
+        });
+      }
+
+      return res.status(200).send({
+        data: specificLoan.rows[0],
+      });
+    } catch (error) {
+      return res.status(500).json({
+        error: 'Ops something broke',
       });
     }
-    return res.status(200).json({
-      status: 200,
-      data: specificLoan,
-    });
   }
 
-  static loanApproval(req, res) {
-    const { id } = req.params;
-    const { status } = req.body;
-    const userLoan = loans.find(loan => loan.id === parseInt(id, 10));
-    if (!userLoan) {
-      return res.status(404).send({
-        status: 404,
-        error: 'user Loan does not exist',
+  /**
+      * approves users loan
+      *
+      * @param {object} request express request object
+      * @param {object} response express response object
+      *
+      * @returns {json} json
+      *
+      * @memberof LoanController
+      */
+ static async approveLoan(req, res) {
+    try {
+      const id = parseInt(req.params.id, 10);
+      const { status } = req.body;
+      const userLoan = await loans.getOneLoan(id);
+
+      if (userLoan.rows.length === 0) {
+        return res.status(404).send({
+          error: 'Loan with that id not found',
+        });
+      }
+      if (userLoan.rows[0].status === 'approved') {
+        return res.status(409).send({
+          error: 'Loan already approved',
+        });
+      }
+      if (userLoan.rows[0].status === 'rejected') {
+        return res.status(409).send({
+          error: 'Loan already rejected',
+        });
+      }
+
+      const updatedLoan = await loans.approveLoan(status, id);
+      const {
+        amount, tenor, paymentInstallment, interest,
+      } = updatedLoan.rows[0];
+      const updatedData = {
+        loanId: updatedLoan.rows[0].id,
+        amount,
+        tenor,
+        status: updatedLoan.rows[0].status,
+        paymentInstallment,
+        interest,
+      };
+     // const emailData = MessageHandler.loanApprovalMessage(updatedLoan.rows[0], userLoan.rows[0].email);
+
+      //EmailHandler.sendNotif(emailData);
+
+      return res.status(200).send({
+        data: updatedData,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        error: 'Ops something broke',
       });
     }
-    if (userLoan.status === 'approved') {
-      return res.status(409).send({
-        status: 409,
-        error: 'Loan already approved',
-      });
-    }
-    userLoan.status = status;
-    const updatedData = {
-      loanId: userLoan.id,
-      loanAmount: userLoan.amount,
-      tenor: userLoan.tenor,
-      status: userLoan.status,
-      monthlyInstallments: userLoan.paymentInstallment,
-      interest: userLoan.interest,
-    };
-    return res.status(200).send({
-      status: 200,
-      data: updatedData,
-    });
   }
+
+
 }
 
 export default Loancontroller;
