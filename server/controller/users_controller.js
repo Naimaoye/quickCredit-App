@@ -1,136 +1,170 @@
 import users from '../models/userss';
-import bcrypt from 'bcryptjs';
 import Auth from '../middle_ware/authenticate';
 
 class Usercontroller {
-    //get all the users
-    static getUsers(req, res) {
-        try{
-            return res.status(200).json({
-              message: 'All users successfully gotten',
-              users,
-              status: 200
-            });
-        }catch(e){
-            return res.status(500).json({
-                message: 'An error occured',
-            });
-        }
-        
-    }
+/**
+    * create new user
+    *
+    * @param {object} request express request object
+    * @param {object} response express response object
+    *
+    * @returns {json} json
+    *
+    * @memberof UserController
+    */
+  static async createUser(req, res) {
+    try {
+      const findUser = await users.findByEmail(req.body.email);
 
-static createUsers(req, res) {
-        const {
-            email, firstName, lastName, address,
-        } = req.body;
-
-
-        const isAdmin = false;
-
-        const token = Auth.generateToken({
-            email,
-            isAdmin
+      if (findUser.rowCount > 0) {
+        return res.status(409).json({
+          error: 'User already exist',
         });
+      }
 
-        const newUser = {
-            id: users.length + 1,
-            token,
-            ...req.body,
-            status: 'unverified',
-            isAdmin,
-            registered: new Date(),
-        };
+      const response = await users.createUserData(req.body);
+      const user = response.rows[0];
+      const {
+        id, firstName, lastName, email, status, address, isAdmin,
+      } = user;
+      const token = Auth.generateToken({
+        id,
+        email,
+        isAdmin,
+      });
 
-        const emailExists = users.find(user => user.email === email);
-        if (emailExists) {
-            return res.status(409).json({
-                status: 409,
-                error: 'User already exist',
-            });
-        }
+      // send email to user
+      
 
-        users.push(newUser);
-        return res.status(201).json({
-            message: 'successfully created a user',
-            status: 201,
-            newUser,
-        });
+      return res.status(201).json({
+        data: {
+          token,
+          id,
+          firstName,
+          lastName,
+          email,
+          status,
+          address,
+          isAdmin,
+        },
+      });
+    } catch (error) {
+      return res.status(500).json({
+        error: 'Ops something went wrong!',
+      });
     }
- 
+  }
+
+
+/**
+  * log  user in
+  *
+  * @param {object} request express request object
+  * @param {object} response express response object
+  *
+  * @returns {json} json
+  *
+  * @memberof UserController
+  */
   
-    static loginUser(req, res) {
-        const { email, password } = req.body;
-        // checks if user exists
-        const emailExists = users.find(user => user.email === email);
+    static async loginUser(req, res) {
+        try{
+          const { email, password } = req.body;
+          const response = await users.findByEmail(email);
 
-        if (!emailExists) {  
+          if(response.rowCount === 0) {
             return res.status(404).json({
-                status: 404,
-                error: 'user not found',
+              error: 'User with this email does not exist';
             });
+          }
+
+          const verifiedPassword = Auth.comparePassword(response.rows[0].password, password);
+        if (!verifiedPassword) {
+          return res.status(400).json({
+            error: 'Invalid password or email',
+          });
         }
-
-         const isAdmin = emailExists.isAdmin;
          
-         const myToken = Auth.generateToken({
-            emailExists,
+         const {
+           id, firstName, lastName, isAdmin
+         } = response.rows[0];
+
+         const token = Auth.generateToken({
+          id,
+          email,
+          isAdmin
+         });
+
+         return res.status(200).json({
+          data: {
+            token,
+            id,
+            email,
+            firstName,
+            lastName,
             isAdmin
-        });
+          },
+         });
 
-        return res.status(200).json({
-            status: 200,
-            data: {
-                token: myToken,
-                id: emailExists.id,
-                firstName: emailExists.firstName,
-                lastName: emailExists.lastName,
-                isAdmin: emailExists.isAdmin,
-                email: emailExists.email,
-            },
-        });
+        }catch (error) {
+          return res.status(500).json({
+            error: 'Ops! something broke',
+          });
+        }
     }
 
-
-    static adminVerifyUser(req, res) {
-
-    const { email } = req.params;
-    const usersdata = users.find(user => user.email === email);
     
-    if (!usersdata) {
-      return res.status(404).send({
-        status: 404,
-        error: 'User not found!',
-      });
-    }
+    /**
+  * check if a user is verified
+  *
+  * @param {object} request express request object
+  * @param {object} response express response object
+  *
+  * @returns {json} json
+  *
+  * @memberof UserController
+  */
 
-    if (usersdata.status === 'verified') {
-      return res.status(409).json({
-        status: 409,
-        message: 'User has been verified',
-      });
-    }
-     if(usersdata.status === 'not verified'){
-      return res.status(404).json({
-        status: 404,
-        message: 'User has not been verified',
-      });
-     }
+    static async adminVerifyUser(req, res) {
+     try{
+      const { email } = req.params;
+      const response = await users.findByEmail(email);
 
-    usersdata.status = 'verified';
-    const changedData = {
-      email: usersdata.email,
-      firstName: usersdata.firstName,
-      lastName: usersdata.lastName,
-      password: usersdata.password,
-      address: usersdata.address,
-      status: usersdata.status,
-      isAdmin: usersdata.isAdmin,
-    };
-    return res.status(200).json({
-      status: 200,
-      data: changedData,
-    });
+      if (!response.rows[0]) {
+        return res.status(404).json({
+          error: 'User with the email not found',
+        });
+      }
 
+      if (response.rows[0].status === 'verified') {
+        return res.status(409).json({
+          error: 'User has already been verified',
+        });
+      }
+      
+      await users.verifyUser(email);
+
+      const updatedData = await users.findByEmail(email);
+      const {
+        firstName, lastName, address, status
+      } = updatedData.rows[0];
+      const data = {
+        email: updatedData.rows[0].email,
+        firstName,
+        lastName,
+        address,
+        status
+      };
+
+      return res.status(200).json({
+        status: 200,
+        data,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        error: 'Ops! something broke',
+      });
+  }
 }
 
 

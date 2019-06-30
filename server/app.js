@@ -1,9 +1,12 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import debug from 'debug';
 import route from './routes/index';
 
+
+dotenv.config();
 const app = express();
 
 const Debug = debug('http');

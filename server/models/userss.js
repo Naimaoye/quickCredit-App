@@ -1,37 +1,51 @@
 import Authenticate from '../middle_ware/authenticate';
+import db from '../migrations/db';
 
 
-const users = [
-    {
-        id: 1,
-        email: 'doyin@email.com',
-        firstName: 'Ade',
-        lastName: 'doyin',
-        password: Authenticate.hashPassword('password'),
-        address: 'cresent street',
-        status: 'verified',
-        isAdmin: false,
-    },
-    {
-        id: 2,
-        email: 'adebayo@ware.ng',
-        password: Authenticate.hashPassword('password'),
-        firstName: 'james',
-        lastName: 'john',
-        address: 'New york city',
-        status: 'not verified',
-        isAdmin: false,
-    },
-    {
-        id: 3,
-        email: 'adebayo@quickcredit.com',
-        password: Authenticate.hashPassword('password'),
-        firstName: 'john',
-        lastName: 'doe',
-        address: 'Lekki phase I, Lagos',
-        status: 'verified',
-        isAdmin: true,
-    },
-];
+class User {
 
-export default users;
+    static createUserData(data) {
+     try{
+        const queryText = `INSERT INTO users(
+         "firstName", "lastName", email, password, address) VALUES ($1, $2, $3, $4, $5) RETURNING *;`;
+         const {
+            firstName, lastName, email, password, address
+         } = data;
+         const hashedPassword = Authenticate.hashPassword(password);
+         const values = [firstName, lastName, email, hashedPassword, address];
+         const response = db.query(queryText, values);
+
+         return response;
+     }catch (error) {
+        console.log(error);
+        return false;
+     }
+    }
+
+    static findByEmail(email) {
+        try {
+            const queryText = 'SELECT * FROM users WHERE email=$1';
+            const response = db.query(queryText, [email]);
+            return response;
+        } catch (error) {
+           console.log(error);
+           return false; 
+        }
+    }
+
+    static verifyUser(email){
+        try{
+            const queryText = "UPDATE users SET status='verified' WHERE email=$1";
+            const response = db.query(queryText, [email]);
+            return response;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
+
+}
+
+export default User;
+
