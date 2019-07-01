@@ -32,7 +32,7 @@ class Repaymentcontroller {
         }
         if (paidAmount > userLoan.rows[0].balance) {
           return res.status(400).send({
-          error: `The paid amount exceeds remaining balane! You only have # ${userLoan.rows[0].balance} left`
+          error: `The paid amount exceeds remaining balane! You only have # ${userLoan.rows[0].balance} left`,
         });
       }
       if (paidAmount <= userLoan.rows[0].balance) {
