@@ -22,7 +22,7 @@ class Repaymentcontroller {
       if(userLoan.rows.length > 0) {
         if (userLoan.rows[0].status !== 'approved') {
           return res.status(401).send({
-            error: 'This loan has not yet been approved';
+            error: 'This loan has not yet been approved',
           });
         }
         if (userLoan.rows[0].repaid === true){
