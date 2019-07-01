@@ -74,7 +74,7 @@ class Usercontroller {
 
           if(response.rowCount === 0) {
             return res.status(404).json({
-              error: 'User with this email does not exist';
+              error: 'User with this email does not exist',
             });
           }
 
