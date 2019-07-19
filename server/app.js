@@ -7,7 +7,7 @@ import route from './routes/index';
 const app = express();
 
 const Debug = debug('http');
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(morgan('dev'));
 
